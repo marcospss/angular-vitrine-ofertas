@@ -1,0 +1,127 @@
+<div class="row m-5">
+    <div class="col-md-4 order-md-2 mb-4">
+        <h4 class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-muted">Suas compras</span>
+            <span class="badge badge-secondary badge-pill">{{ cartItems.length }}</span>
+        </h4>
+        <ul class="list-group mb-3">
+            <li *ngFor="let item of cartItems" class="list-group-item d-flex justify-content-between lh-condensed">
+                <div>
+                    <h6 class="my-0">{{ item.title }}</h6>
+                </div>
+                <span class="text-muted">{{ item.value | currency: 'BRL': true }}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                <span>Total</span>
+                <strong>{{ cartService.totalCart() | currency: 'BRL': true }}</strong>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-8 order-md-1">
+        <h4 class="mb-3">Endereço de Cobrança</h4>
+        <form class="needs-validation" novalidate [formGroup]="formCheckout" (ngSubmit)="onSubmit()" [ngClass]="{'was-validated': checkFormInvalid }">
+            <div class="row">
+                <div class="col-md-6 mb-3" [ngClass]="{'was-validated': checkValidInput('firstName')}">
+                    <label for="firstName">Primeiro Nome</label>
+                    <input type="text" class="form-control" id="firstName" formControlName="firstName" placeholder="Primeiro Nome" value="" required>
+                    <div class="invalid-feedback">
+                        Primeiro nome válido é obrigatório.
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3" [ngClass]="{'was-validated': checkValidInput('lastName')}">
+                    <label for="lastName">Último Nome</label>
+                    <input type="text" class="form-control" id="lastName" formControlName="lastName" placeholder="Último Nome" value="" required>
+                    <div class="invalid-feedback">
+                        Último nome válido é obrigatório.
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3" [ngClass]="{'was-validated': checkValidInput('email') || checkEmailValid() }">
+                <label for="email">E-mail</label>
+                <input type="email" class="form-control" id="email" formControlName="email" placeholder="you@example.com" required email>
+                <div class="invalid-feedback">
+                    Por favor, insira um endereço de e-mail válido para atualizações de envio.
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3" [ngClass]="{'was-validated': checkValidInput('username')}">
+                    <label for="username">Nome de usuário</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">@</span>
+                        </div>
+                        <input type="text" class="form-control" id="username" formControlName="username" placeholder="Nome de usuário" required>
+                        <div class="invalid-feedback">
+                            Seu nome de usuário é obrigatório.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3" [ngClass]="{'was-validated': checkValidInput('password')}">
+                    <label for="password">Senha</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">*</span>
+                        </div>
+                        <input type="text" class="form-control" id="password" formControlName="password" placeholder="Sua senha de acesso" required>
+                        <div class="invalid-feedback">
+                            Sua senha é obrigatória.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+            <div formGroupName="address">
+                <div class="row">
+                    <div class="col-md-3 mb-3" [ngClass]="{'was-validated': checkValidInput('address.zip')}">
+                        <label for="zip">CEP</label>
+                        <input type="tel" class="form-control" id="zip" formControlName="zip" placeholder="CEP" required maxlength="8" (blur)="searchCEP()">
+                        <div class="invalid-feedback">
+                            CEP é obrigatório.
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3" [ngClass]="{'was-validated': checkValidInput('address.number')}">
+                        <label for="number">Número</label>
+                        <input type="tel" class="form-control" id="number" formControlName="number" placeholder="Número" required maxlength="6">
+                        <div class="invalid-feedback">
+                            Número é obrigatório
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="complement">Complemento <span class="text-muted">(Opcional)</span></label>
+                        <input type="text" class="form-control" id="complement" formControlName="complement" placeholder="Complemento">
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="publicPlace">Endereço</label>
+                    <input type="text" class="form-control" id="publicPlace" formControlName="publicPlace" placeholder="Seu endereço" required readonly>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="state">Estado</label>
+                        <select class="custom-select d-block w-100" id="state" formControlName="state" required>
+                            <option value="">Escolher...</option>
+                            <option *ngFor="let state of statesBr | async" [value]="state.acronyms">{{ state.name }}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="city">Cidade</label>
+                        <input type="text" class="form-control" id="city" formControlName="city" placeholder="Cidade" required readonly>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="mb-4">
+            <button class="btn btn-primary btn-lg btn-block" type="submit">Concluir o pedido</button>
+        </form>
+    </div>
+</div>

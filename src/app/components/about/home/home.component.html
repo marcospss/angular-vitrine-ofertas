@@ -1,0 +1,17 @@
+<app-header></app-header>
+<main role="main">
+    <div class="container">
+        <div class="row row-pt-sm row-pb-sm">
+            <div class="col-md-4">
+                <h2>Sobre nós</h2>
+                <div class="list-group">
+                    <a class="list-group-item list-group-item-action active" [routerLink]="['/sobre/historia']">História</a>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</main>
+<app-footer></app-footer>

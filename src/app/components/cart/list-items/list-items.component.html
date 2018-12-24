@@ -1,0 +1,43 @@
+<table class="table table-striped" *ngIf="cartItems.length; else cartEmpty">
+    <thead>
+        <tr>
+            <th scope="col">&nbsp;</th>
+            <th scope="col">Produto</th>
+            <th scope="col">Preço</th>
+            <th scope="col">Quantidade</th>
+            <th scope="col">Total</th>
+            <th scope="col">&nbsp;</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of cartItems">
+            <td class="align-middle" scope="row">img</td>
+            <td class="align-middle">{{ item.title }}</td>
+            <td class="align-middle">{{ item.value | currency: 'BRL': true }}</td>
+            <td class="align-middle text-center">
+                <button (click)="decrease(item)" type="button" class="btn btn-outline-info"><b>-</b></button>
+                <span class="p-3">{{ item.amount }}</span>
+                <button (click)="add(item)" type="button" class="btn btn-outline-info"><b>+</b></button>
+            </td>
+            <td class="align-middle">{{ (item.amount * item.value) | currency: 'BRL': true }}</td>
+            <td class="align-middle"><button (click)="removeItem(item)" type="button" class="btn btn-outline-danger"><b>X</b></button></td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3"><button (click)="clear()" type="button" class="btn btn-outline-danger"><b>Limpar</b></button></td>
+            <td>Total</td>
+            <td colspan="2">{{ cartService.totalCart() | currency: 'BRL': true }}</td>
+        </tr>
+        <tr>
+            <td colspan="6" class="text-right"><a [routerLink]="['/carrinho/checkout']" class="btn btn-block btn-lg btn-success"><b>Continue para o checkout</b></a></td>
+        </tr>
+    </tfoot>
+</table>
+<ng-template #cartEmpty>
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        <h1 class="display-4">Seu carrinho está vazio!</h1>
+        <p class="lead"><a class="nav-link" [routerLink]="['/ofertas']">Não perca tempo, aproveite as ofertas.</a></p>
+    </div>
+    <hr />
+</ng-template>

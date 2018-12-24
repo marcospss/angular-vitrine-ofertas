@@ -1,0 +1,9 @@
+<form class="form-inline my-2 my-lg-0">
+    <input type="text" class="form-control mr-sm-2" placeholder="Procurar Ofertas..." formControlName="query" id="query" name="query" (keyup)="searchOffers($event.target.value)" autocomplete="off" autofocus required />
+    <!-- <button class="btn btn-outline-success my-2 my-sm-0">Procurar</button> -->
+</form>
+<ul class="list-group">
+    <li class="list-group-item" *ngFor="let offer of offers$">
+        <a [routerLink]="['/',offer.slug]" (click)="clearSearch()">{{ offer.title }}</a>
+    </li>
+</ul>

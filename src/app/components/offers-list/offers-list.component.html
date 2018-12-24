@@ -1,0 +1,35 @@
+<app-header></app-header>
+<main role="main">
+    <div class="container">
+        <div class="row">
+            <aside class="col-md-3">
+                <div class="list-group">
+                    <button *ngFor="let section of sections$ | async" type="button" class="list-group-item list-group-item-action" (click)="filterProducts(section.slug)">{{ section.title }}</button>
+                </div>
+            </aside>
+            <div class="col-md-9">
+                <div class="row" *ngIf="offers$ | async; let offers; else loading">
+                    <div class="col-sm-4" *ngFor="let offer of offers">
+                        <div class="card h-100">
+                            <a [routerLink]="['/',offer.slug]"><img class="card-img-top" src="http://placehold.it/348x200" alt=""></a>
+                            <div class="card-body">
+                                <h4 class="card-title">
+                                    <a [routerLink]="['/',offer.slug]">{{ offer.title }} - {{ offer.$key }}</a>
+                                </h4>
+                                <h5>{{ offer.value | currency:'BRL':true }}</h5>
+
+                            </div>
+                            <div class="card-footer">
+                                <small class="text-muted"><a [routerLink]="['/',offer.slug]">Mais detalhes</a></small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <ng-template #loading>
+                    <app-loading-animation></app-loading-animation>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</main>
+<app-footer></app-footer>

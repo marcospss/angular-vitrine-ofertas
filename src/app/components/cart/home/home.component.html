@@ -1,0 +1,35 @@
+<app-header></app-header>
+<main role="main">
+    <div class="container">
+        <!-- STEPS -->
+        <div class="row row-pt-sm row-pb-sm">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="process-wrap">
+                    <div class="process text-center active">
+                        <p><span>01</span></p>
+                        <h3><a [routerLink]="['/carrinho/produtos']">Produtos</a></h3>
+                    </div>
+                    <div class="process text-center">
+                        <p><span>02</span></p>
+                        <h3><a [routerLink]="['/carrinho/checkout']">Checkout</a></h3>
+                    </div>
+                    <div class="process text-center">
+                        <p><span>03</span></p>
+                        <h3>
+                            <a [routerLink]="['/carrinho/sucesso']">Pedido completo</a></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/ STEPS -->
+        <!-- PRODUCTS -->
+        <div class="row">
+            <div class="col-md-12">
+                <hr />
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+        <!--/ PRODUCTS -->
+    </div>
+</main>
+<app-footer></app-footer>
